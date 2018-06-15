@@ -2,6 +2,8 @@
 
 **8-0.** Compile, execute, and test the programs in this chapter.
 
+See [chapter_programs/template_practice.cpp](./chapter_programs/template_practice.cpp).
+
 **8-1.** Note that the various `analysis` functions we wrote in 6.2/110 share 
 the same behavior; they differe only in terms of the functions they call to
 calculate the final grade. Write a template function, parameterized by the type
@@ -12,6 +14,8 @@ and described in 6.5/121. Specify what kinds of iterators they require. Try to
 minimize the number of distinct iterator operations that each function requires.
 After you have finished your implementation, see B.3/321 to see how well you 
 did.
+
+I am skipping this exercise.
 
 ```
 
@@ -24,13 +28,19 @@ accumulate(b, e, t)
 
 ```
 
+See [ex_2_dir/](./ex_2_dir).
+
 **8-3.** As we learned in 4.1.4/58, it can be expensive to return (or pass) a 
 container by value. Could we rewrite the `median` function to operate on 
 iterators instead of passing the `vector`? If we did so, what would you expect
 the performance to be?
 
+See [ex_3.cpp](./ex_3.cpp).
+
 **8-4.** Implement the `swap` function that we used in 8.2.5/148. Why did we
 call `swap` rather than exchange the values of `*beg` and `*end` directly?
+
+See [ex_4.cpp](./ex_4.cpp).
 
 **8-5.** Reimplement the `gen_sentence` and `xref` functions from Chapter 7 to
 use output iterators rather than writing their output directly to a 
@@ -38,13 +48,27 @@ use output iterators rather than writing their output directly to a
 output iterator directly to the standard output, and by storing the results
 in a `list<string>` and a `vector<string>`.
 
+I am skipping this exercise.
+
 **8-6.** Suppose that `m` has type `map<int, string>`, and that we encounter a
 call to `copy(m.begin(), m.end(), back_inserter(x))`. What can we say about the
 type of `x`? What if the call were `copy(x.begin(), x.end(), back_inserter(m))`
 instead?
 
+In the first case, `x` would have to be a container that supported `push_back`
+and iterators that contained pairs of `<int, string>`. The second case is 
+invalid because `map` does not support `push_back`.
+
 **8-7.** Why doesn't the `max` function use two template parameters, one for 
 each argument type?
 
+If `max` used two template parameters it would have to know which of the values
+is larger to determine the return type. Since this value comparison happens at
+run time, this implementation would yield a compilation error.
+
 **8-8.** In the `binary_search` function in 8.2.6/148, why didn't we write
 `(begin + end) / 2` instead of the more complicated `begin + (end - begin) / 2`?
+
+The former technique does not properly account for interger overflow. Given a 
+very large container, if `begin + end > INT_MAX` then this will yield an error.
+However, subtraction will not have this problem.
